@@ -22,7 +22,7 @@ Return<void> Keystore::getBlob(const hidl_string& key, getBlob_cb _hidl_cb) {
   }
   hidl_vec<uint8_t> value;
   // Retrieve the blob as wifi user.
-  auto ret = service->get(String16(key), AID_WIFI, &value);
+  auto ret = service->get(String16(key.c_str()), AID_WIFI, &value);
   if (!ret.isOk()) {
     _hidl_cb(KeystoreStatusCode::ERROR_UNKNOWN, {});
     return Void();
@@ -41,7 +41,7 @@ Return<void> Keystore::getPublicKey(
     return Void();
   }
   hidl_vec<uint8_t> pubkey;
-  auto ret = service->get_pubkey(String16(keyId), &pubkey);
+  auto ret = service->get_pubkey(String16(keyId.c_str()), &pubkey);
   if (!ret.isOk()) {
     _hidl_cb(KeystoreStatusCode::ERROR_UNKNOWN, {});
     return Void();
@@ -61,7 +61,7 @@ Return<void> Keystore::sign(
     return Void();
   }
   hidl_vec<uint8_t> signedData;
-  auto ret = service->sign(String16(keyId), dataToSign, &signedData);
+  auto ret = service->sign(String16(keyId.c_str()), dataToSign, &signedData);
   if (!ret.isOk()) {
     _hidl_cb(KeystoreStatusCode::ERROR_UNKNOWN, {});
     return Void();
